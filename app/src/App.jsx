@@ -6,15 +6,15 @@ import { MainContainer, ChatContainer, MessageList, Message, MessageInput, Typin
 const API_KEY = "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";
 // "Explain things like you would to a 10 year old learning how to code."
 const systemMessage = { //  Explain things like you're talking to a software professional with 5 years of experience.
-  "role": "system", "content": "Explain things like you're talking to a software professional with 2 years of experience."
+  "role": "system", "content": "Explain things like you're a veterinarian giving advice about pets."
 }
 
 function App() {
   const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
+      message: "Hello, I'm VetBot! Ask me anything!",
       sentTime: "just now",
-      sender: "ChatGPT"
+      sender: "VetBot"
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
@@ -43,7 +43,7 @@ function App() {
 
     let apiMessages = chatMessages.map((messageObject) => {
       let role = "";
-      if (messageObject.sender === "ChatGPT") {
+      if (messageObject.sender === "VetBot") {
         role = "assistant";
       } else {
         role = "user";
@@ -90,7 +90,7 @@ function App() {
           <ChatContainer>       
             <MessageList 
               scrollBehavior="smooth" 
-              typingIndicator={isTyping ? <TypingIndicator content="ChatGPT is typing" /> : null}
+              typingIndicator={isTyping ? <TypingIndicator content="VetBot is typing" /> : null}
             >
               {messages.map((message, i) => {
                 console.log(message)
