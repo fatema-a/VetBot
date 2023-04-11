@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
+import {Container} from 'react-bootstrap';
 
 const API_KEY = "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";
 // "Explain things like you would to a 10 year old learning how to code."
@@ -84,8 +85,11 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div style={{ position:"relative", height: "800px", width: "700px"  }}>
+    <Container> <div className="App">
+      <div style={{ position:"relative", height: "600px", width: "700px"  }}>
+        <div className="top" style={{ position:"relative", height: "90px", width: "700px" }}>
+          <h2 className='div-title'>VetBot</h2>
+        </div>
         <MainContainer>
           <ChatContainer>       
             <MessageList 
@@ -101,7 +105,8 @@ function App() {
           </ChatContainer>
         </MainContainer>
       </div>
-    </div>
+    </div></Container>
+   
   )
 }
 

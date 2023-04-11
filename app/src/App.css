@@ -1,8 +1,14 @@
+body{
+  
+
+  background: linear-gradient(180deg, #4CECFE 5.38%, #54E3FE 11.63%, #5CDAFE 17.88%, #63D0FE 24.13%, #6BC7FE 30.38%, #73BEFE 36.63%, #7BB5FE 42.88%, #82ACFE 49.13%, #8AA3FF 55.38%, #9299FF 61.63%, #9A90FF 67.88%, #A187FF 74.13%, #A97EFF 80.38%, #B175FF 86.63%, #B96BFF 92.88%, #C062FF 99.13%, #C859FF 80.38%);
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  
 }
 
 .logo {
@@ -39,4 +45,22 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.ChatContainer{
+  height: 100%;
+  width: 100%;
+}
+.top{
+  background-color: #B8E6FF;
+}
+.div-title{
+  text-align: center;
+font-style: normal;
+font-weight: 600;
+font-size: 36px;
+line-height: 44px;
+text-align: center;
+
+color: #2B4179;
 }
