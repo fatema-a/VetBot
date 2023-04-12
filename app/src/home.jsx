@@ -9,6 +9,7 @@ import {
   MessageInput,
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { Button } from "react-bootstrap";
@@ -32,7 +33,9 @@ function Home() {
         </div>
       </Row>
       <Row>
-        <Button id="startButton">Start Chat</Button>
+        <Link to="/chatbot">
+          <Button id="startButton">Start Chat</Button>
+        </Link>
       </Row>
     </Container>
   );
