@@ -2,7 +2,8 @@ import { useState } from 'react'
 import './App.css'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react';
-import {Container} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
+import vet from "./VetBot_logo.png";
 
 const API_KEY = "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";
 // "Explain things like you would to a 10 year old learning how to code."
@@ -85,28 +86,35 @@ function App() {
   }
 
   return (
-    <Container> <div className="App">
-      <div style={{ position:"relative", height: "600px", width: "700px"  }}>
-        <div className="top" style={{ position:"relative", height: "90px", width: "700px" }}>
-          <h2 className='div-title'>VetBot</h2>
+    <Container className='contain'>
+    <Row>
+      <Col>
+        <div className="App">
+          <div style={{ height: "30rem" }}>
+            <div className="top containRequest" style={{ marginBottom: "-30px" }}>
+              <img  className="vet-pic"src={vet}></img>
+              <h2 className='div-title'>VetBot</h2>
+            </div>
+           
+            <MainContainer>
+              <ChatContainer style={{ maxWidth: "800px", margin: "0 auto" }}>       
+                <MessageList 
+                  scrollBehavior="smooth" 
+                  typingIndicator={isTyping ? <TypingIndicator content="VetBot is typing" /> : null}
+                >
+                  {messages.map((message, i) => {
+                    console.log(message)
+                    return <Message key={i} model={message} />
+                  })}
+                </MessageList>
+                <MessageInput placeholder="Type message here" onSend={handleSend} />        
+              </ChatContainer>
+            </MainContainer>
+          </div>
         </div>
-        <MainContainer>
-          <ChatContainer>       
-            <MessageList 
-              scrollBehavior="smooth" 
-              typingIndicator={isTyping ? <TypingIndicator content="VetBot is typing" /> : null}
-            >
-              {messages.map((message, i) => {
-                console.log(message)
-                return <Message key={i} model={message} />
-              })}
-            </MessageList>
-            <MessageInput placeholder="Type message here" onSend={handleSend} />        
-          </ChatContainer>
-        </MainContainer>
-      </div>
-    </div></Container>
-   
+      </Col>
+    </Row>
+  </Container>
   )
 }
 

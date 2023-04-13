@@ -1,14 +1,30 @@
-body{
-  
-
-  background: linear-gradient(180deg, #4CECFE 5.38%, #54E3FE 11.63%, #5CDAFE 17.88%, #63D0FE 24.13%, #6BC7FE 30.38%, #73BEFE 36.63%, #7BB5FE 42.88%, #82ACFE 49.13%, #8AA3FF 55.38%, #9299FF 61.63%, #9A90FF 67.88%, #A187FF 74.13%, #A97EFF 80.38%, #B175FF 86.63%, #B96BFF 92.88%, #C062FF 99.13%, #C859FF 80.38%);
+body {
+  background: linear-gradient(
+    180deg,
+    #4cecfe 5.38%,
+    #54e3fe 11.63%,
+    #5cdafe 17.88%,
+    #63d0fe 24.13%,
+    #6bc7fe 30.38%,
+    #73befe 36.63%,
+    #7bb5fe 42.88%,
+    #82acfe 49.13%,
+    #8aa3ff 55.38%,
+    #9299ff 61.63%,
+    #9a90ff 67.88%,
+    #a187ff 74.13%,
+    #a97eff 80.38%,
+    #b175ff 86.63%,
+    #b96bff 92.88%,
+    #c062ff 99.13%,
+    #c859ff 80.38%
+  );
 }
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  
 }
 
 .logo {
@@ -47,20 +63,49 @@ body{
   color: #888;
 }
 
-.ChatContainer{
+.ChatContainer {
   height: 100%;
   width: 100%;
 }
-.top{
-  background-color: #B8E6FF;
+.top {
+  margin-top: -50px;
+  background-color: #b8e6ff;
 }
-.div-title{
+.div-title {
   text-align: center;
-font-style: normal;
-font-weight: 600;
-font-size: 36px;
-line-height: 44px;
-text-align: center;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
 
-color: #2B4179;
+  color: #2b4179;
+}
+.vet-pic{
+  width: 60px;
+  height: 50px;
+}
+.containRequest {
+  display: flex;
+}
+
+.contain {
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  max-width: 500px;
+}
+@media only screen and (min-width: 600px) {
+  .contain {
+    width: 210%;
+    margin-left: -30%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .ChatContainer {
+    max-width: 100%;
+  }
+  .contain {
+    width: 110%;
+    margin-left: -5%;
+  }
 }
