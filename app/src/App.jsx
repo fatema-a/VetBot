@@ -31,18 +31,13 @@ function App() {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  const [previewFile, setPreviewFile] = useState(null);
 
   const handleSend = async (message) => {
     const newMessage = {
-      message: message,
+      message,
       direction: "outgoing",
       sender: "user",
     };
-
-    if (uploadedFiles.length > 0) {
-      newMessage.message = uploadedFiles[0].file;
-    }
 
     const newMessages = [...messages, newMessage];
 
@@ -106,31 +101,34 @@ function App() {
   }
 
   const handleAttachClick = () => {
+    // open the file dialog box to let user select files to upload
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*, video/*";
     fileInput.addEventListener("change", async () => {
+      // handle the file(s) selected by the user
       const files = fileInput.files;
       if (files && files.length > 0) {
-        const file = files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          const preview = <img src={reader.result} alt={file.name} />;
-          setPreviewFile(reader.result); // set the preview file URL
-          setUploadedFiles([{ file, preview }]);
+        // do something with the file(s)
+        // For example, you can upload the file(s) to a server
+        // and then display a hard coded message to indicate that the file(s) have been uploaded
+        const newMessage = {
+          message: "Your file(s) have been uploaded.",
+          sentTime: "just now",
+          sender: "VetBot",
         };
-        reader.readAsDataURL(file);
+        const newMessages = [...messages, newMessage];
+        setMessages(newMessages);
+        setIsTyping(true);
+        await processMessageToChatGPT(newMessages);
       }
     });
+    handleAttachChange({ target: { files: fileInput.files } });
     fileInput.click();
   };
 
   function handleRemoveFile(index) {
     setUploadedFiles((prevFiles) => prevFiles.filter((file, i) => i !== index));
-    if (index === 0) {
-      // reset the preview file URL if removing the first file
-      setPreviewFile(null);
-    }
   }
 
   function handleAttachChange(event) {
@@ -141,7 +139,6 @@ function App() {
     }));
 
     setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    setPreviewFile(newFiles[0].preview); // Set the preview file URL
   }
 
   return (
@@ -160,25 +157,18 @@ function App() {
 
               <MainContainer>
                 <ChatContainer style={{ maxWidth: "800px", margin: "0 auto" }}>
-                  <MessageList>
-                    {messages.map((message, index) => (
-                      <Message
-                        model={{
-                          message: message.message,
-                          sentTime: message.sentTime,
-                          direction: message.direction,
-                        }}
-                        key={index}
-                        yours={message.sender === "user"}
-                        onDownloadClick={() => handleDownloadClick(index)}
-                        onRemoveClick={() => handleRemoveClick(index)}
-                        onReplyClick={() => handleReplyClick(index)}
-                      >
-                        <div
-                          dangerouslySetInnerHTML={{ __html: message.message }}
-                        />
-                      </Message>
-                    ))}
+                  <MessageList
+                    scrollBehavior="smooth"
+                    typingIndicator={
+                      isTyping ? (
+                        <TypingIndicator content="VetBot is typing" />
+                      ) : null
+                    }
+                  >
+                    {messages.map((message, i) => {
+                      console.log(message);
+                      return <Message key={i} model={message} />;
+                    })}
                   </MessageList>
                   <MessageInput
                     id="textfield"
@@ -186,16 +176,10 @@ function App() {
                     onSend={handleSend}
                     attachButton={true}
                     onAttachClick={handleAttachClick}
-                  >
-                    {previewFile && (
-                      <div className="preview-container">
-                        <img src={previewFile} alt="Preview" />
-                        <button onClick={() => setPreviewFile(null)}>
-                          Remove
-                        </button>
-                      </div>
-                    )}
-                  </MessageInput>
+                    showPreview={true}
+                    uploadedFiles={uploadedFiles}
+                    onRemoveFile={handleRemoveFile}
+                  />
                 </ChatContainer>
               </MainContainer>
             </div>
