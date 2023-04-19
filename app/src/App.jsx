@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -31,6 +31,7 @@ function App() {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [pendingFiles, setPendingFiles] = useState([]);
 
   const handleSend = async (message) => {
     const newMessage = {
@@ -120,7 +121,9 @@ function App() {
         const newMessages = [...messages, newMessage];
         setMessages(newMessages);
         setIsTyping(true);
-        await processMessageToChatGPT(newMessages);
+        // setUploadedFiles([...uploadedFiles, ...files]);
+        setPendingFiles([...pendingFiles, ...files]);
+        // await processMessageToChatGPT(newMessages);
       }
     });
     handleAttachChange({ target: { files: fileInput.files } });
@@ -128,7 +131,7 @@ function App() {
   };
 
   function handleRemoveFile(index) {
-    setUploadedFiles((prevFiles) => prevFiles.filter((file, i) => i !== index));
+    setPendingFiles((prevFiles) => prevFiles.filter((file, i) => i !== index));
   }
 
   function handleAttachChange(event) {
@@ -138,7 +141,7 @@ function App() {
       preview: URL.createObjectURL(file),
     }));
 
-    setUploadedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    setPendingFiles((prevFiles) => [...prevFiles, ...newFiles]);
   }
 
   return (
@@ -154,7 +157,6 @@ function App() {
                 <img className="vet-pic" src={vet}></img>
                 <h2 className="div-title">VetBot</h2>
               </div>
-
               <MainContainer>
                 <ChatContainer style={{ maxWidth: "800px", margin: "0 auto" }}>
                   <MessageList
@@ -182,6 +184,65 @@ function App() {
                   />
                 </ChatContainer>
               </MainContainer>
+
+              {pendingFiles.length > 0 && (
+                <div
+                  style={{
+                    maxWidth: "800px",
+                    maxHeight: "150px",
+                    minHeight: "150px",
+                    margin: "0",
+                    backgroundColor: "#b8e6ff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden",
+                  }}
+                >
+                  {pendingFiles.map((file, i) => {
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          position: "relative",
+                          display: "inline-block",
+                          marginRight: "5px",
+                        }}
+                      >
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`File ${i}`}
+                          style={{
+                            maxWidth: "50px",
+                            maxHeight: "50px",
+                            objectFit: "contain",
+                          }}
+                        />
+                        <button
+                          style={{
+                            position: "absolute",
+                            top: "0",
+                            right: "0",
+                            backgroundColor: "transparent",
+                            border: "none",
+                            cursor: "pointer",
+                            outline: "none",
+                          }}
+                          onClick={() => handleRemoveFile(i)}
+                        >
+                          <span
+                            style={{ marginRight: "-30px" }}
+                            role="img"
+                            aria-label="remove"
+                          >
+                            ⛔
+                          </span>
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </Col>
