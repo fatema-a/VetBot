@@ -150,7 +150,7 @@ function App() {
   }
 
   return (
-    <Container className="contain">
+    <Container>
       <Row>
         <Col>
           <div className="App">
@@ -163,7 +163,7 @@ function App() {
                 <h2 className="div-title">VetBot</h2>
               </div>
               <MainContainer>
-                <ChatContainer style={{ maxWidth: "800px", margin: "0 auto" }}>
+                <ChatContainer style={{ minWidth: "500px",maxWidth: "500px", margin: "0 auto" }}>
                   <MessageList
                     scrollBehavior="smooth"
                     typingIndicator={
