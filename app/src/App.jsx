@@ -102,28 +102,33 @@ function App() {
   }
 
   const handleAttachClick = () => {
-    // open the file dialog box to let user select files to upload
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*, video/*";
     fileInput.addEventListener("change", async () => {
-      // handle the file(s) selected by the user
       const files = fileInput.files;
       if (files && files.length > 0) {
-        // do something with the file(s)
-        // For example, you can upload the file(s) to a server
-        // and then display a hard coded message to indicate that the file(s) have been uploaded
+        const fileUrl = URL.createObjectURL(files[0]);
+        const fileName = files[0].name;
+
         const newMessage = {
-          message: "Your file(s) have been uploaded.",
+          message: `Uploaded file: <a href="${fileUrl}" target="_blank" className="message">${fileName}</a>`,
+          sentTime: "just now",
+          sender: "user",
+          fileUrl: fileUrl,
+          direction: "outgoing",
+        };
+
+        const responseMessage = {
+          message:
+            "Your file(s) have been received and will be reviewed by a professional.",
           sentTime: "just now",
           sender: "VetBot",
         };
-        const newMessages = [...messages, newMessage];
-        setMessages(newMessages);
+
+        const responseMessages = [...messages, newMessage, responseMessage];
+        setMessages(responseMessages);
         setIsTyping(true);
-        // setUploadedFiles([...uploadedFiles, ...files]);
-        setPendingFiles([...pendingFiles, ...files]);
-        // await processMessageToChatGPT(newMessages);
       }
     });
     handleAttachChange({ target: { files: fileInput.files } });
@@ -169,7 +174,9 @@ function App() {
                   >
                     {messages.map((message, i) => {
                       console.log(message);
-                      return <Message key={i} model={message} />;
+                      return (
+                        <Message key={i} model={message} className="message" />
+                      );
                     })}
                   </MessageList>
                   <MessageInput
