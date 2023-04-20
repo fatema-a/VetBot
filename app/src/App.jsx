@@ -18,7 +18,7 @@ const systemMessage = {
   //  Explain things like you're talking to a software professional with 5 years of experience.
   role: "system",
   content:
-    "Explain things like you're a veterinarian giving advice about pets.",
+    "Explain things like you're a veterinarian giving advice about pets, if you dont know what to do act like a scheduler for a vet",
 };
 
 function App() {
