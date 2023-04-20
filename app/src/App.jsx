@@ -163,7 +163,7 @@ function App() {
                 <h2 className="div-title">VetBot</h2>
               </div>
               <MainContainer>
-                <ChatContainer style={{ minWidth: "500px",maxWidth: "500px", margin: "0 auto" }}>
+                <ChatContainer className="chat-container" >
                   <MessageList
                     scrollBehavior="smooth"
                     typingIndicator={
