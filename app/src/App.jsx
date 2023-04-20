@@ -121,7 +121,7 @@ function App() {
 
         const responseMessage = {
           message:
-            "Your file(s) have been received and will be reviewed by a professional.",
+            "Your file(s) have been received and will be reviewed by a professional. Could you provide more information?",
           sentTime: "just now",
           sender: "VetBot",
         };
