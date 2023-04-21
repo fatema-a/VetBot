@@ -26,7 +26,7 @@ import {
 import { Container, Row, Col } from "react-bootstrap";
 import vet from "./VetBot_logo.png";
 
-const API_KEY = "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";
+const API_KEY = "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";
 const systemMessage = {
   role: "system",
   content:
