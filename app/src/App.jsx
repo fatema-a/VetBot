@@ -42,7 +42,6 @@ function App() {
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
   const [pendingFiles, setPendingFiles] = useState([]);
 
   const handleSend1 = async (message) => {
@@ -66,14 +65,14 @@ function App() {
     let newMessage;
     let responseMessage = null;
     let newMessages;
-    const fileNames = pendingFiles.map(file => file.name).join(", ");
-  
+    const fileNames = pendingFiles.map((file) => file.name).join(", ");
+
     if (fileNames) {
       newMessage = {
-        message: `${message} \n\n <span className="message" style="font-size: 12px; color: #90EE90"> <b> Files Sent: ${fileNames} </b> </span>`,
+        message: `${message} \n <span className="message" style="font-size: 12px; color: #90EE90"> <b> File(s) Sent: ${fileNames} </b> </span>`,
         direction: "outgoing",
         sender: "user",
-        fileUrl: pendingFiles.map(file => URL.createObjectURL(file)),
+        fileUrl: pendingFiles.map((file) => URL.createObjectURL(file)),
       };
 
       responseMessage = {
@@ -81,7 +80,7 @@ function App() {
           "Your file(s) have been received and will be reviewed by a professional. Could you provide more information?",
         sentTime: "just now",
         sender: "VetBot",
-      };      
+      };
     } else {
       newMessage = {
         message,
@@ -89,16 +88,16 @@ function App() {
         sender: "user",
       };
     }
-    if(responseMessage != null){
+
+    if (responseMessage != null) {
       newMessages = [...messages, newMessage, responseMessage];
-    }
-    else{
+    } else {
       newMessages = [...messages, newMessage];
     }
-  
+
     setMessages(newMessages);
     setPendingFiles([]);
-  
+
     // Initial system message to determine ChatGPT functionality
     // How it responds, how it talks, etc.
     setIsTyping(true);
@@ -255,7 +254,7 @@ function App() {
                     attachButton={true}
                     onAttachClick={handleAttachClick}
                     showPreview={true}
-                    uploadedFiles={uploadedFiles}
+                    uploadedFiles={pendingFiles}
                     onRemoveFile={handleRemoveFile}
                   />
                 </ChatContainer>
