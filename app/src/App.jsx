@@ -264,10 +264,10 @@ function App() {
 
               {pendingFiles.length > 0 && (
                 <div
+                className="file-container"
                   style={{
                     maxWidth: "800px",
                     maxHeight: "150px",
-                    minHeight: "150px",
                     margin: "0",
                     backgroundColor: "#b8e6ff",
                     display: "flex",
