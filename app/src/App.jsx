@@ -45,7 +45,7 @@ function App() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [pendingFiles, setPendingFiles] = useState([]);
 
-  const handleSend = async (message) => {
+  const handleSend1 = async (message) => {
     const newMessage = {
       message,
       direction: "outgoing",
@@ -61,6 +61,50 @@ function App() {
     setIsTyping(true);
     await processMessageToChatGPT(newMessages);
   };
+
+  const handleSend = async (message) => {
+    let newMessage;
+    let responseMessage = null;
+    let newMessages;
+    const fileNames = pendingFiles.map(file => file.name).join(", ");
+  
+    if (fileNames) {
+      newMessage = {
+        message: `${message} \n\n <span className="message" style="font-size: 12px; color: #90EE90"> <b> Files Sent: ${fileNames} </b> </span>`,
+        direction: "outgoing",
+        sender: "user",
+        fileUrl: pendingFiles.map(file => URL.createObjectURL(file)),
+      };
+
+      responseMessage = {
+        message:
+          "Your file(s) have been received and will be reviewed by a professional. Could you provide more information?",
+        sentTime: "just now",
+        sender: "VetBot",
+      };      
+    } else {
+      newMessage = {
+        message,
+        direction: "outgoing",
+        sender: "user",
+      };
+    }
+    if(responseMessage != null){
+      newMessages = [...messages, newMessage, responseMessage];
+    }
+    else{
+      newMessages = [...messages, newMessage];
+    }
+  
+    setMessages(newMessages);
+    setPendingFiles([]);
+  
+    // Initial system message to determine ChatGPT functionality
+    // How it responds, how it talks, etc.
+    setIsTyping(true);
+    await processMessageToChatGPT(newMessages);
+  };
+  
 
   async function processMessageToChatGPT(chatMessages) {
     // messages is an array of messages
@@ -127,7 +171,7 @@ function App() {
     fileInput.addEventListener("change", async () => {
       const files = fileInput.files;
       if (files && files.length > 0) {
-        const fileUrl = URL.createObjectURL(files[0]);
+        /* const fileUrl = URL.createObjectURL(files[0]);
         const fileName = files[0].name;
 
         const newMessage = {
@@ -146,7 +190,8 @@ function App() {
         };
 
         const responseMessages = [...messages, newMessage, responseMessage];
-        setMessages(responseMessages);
+        setMessages(responseMessages); */
+        setPendingFiles([...pendingFiles, ...files]);
         setIsTyping(true);
       }
     });
