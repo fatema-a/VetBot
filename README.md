@@ -8,3 +8,4 @@ Instructions to run our code
 4.	Change your directory to “app” by entering: `cd app`
 5.	Install required dependencies by entering: `npm i`
 6.	Run the app by entering: `npm run dev`
+7.  Open http://127.0.0.1:5173/ to view the app in your browser.
