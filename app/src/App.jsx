@@ -1,3 +1,17 @@
+// This is a React web application that allows users to chat with a veterinary bot to ask for advice on pets. 
+// The app utilizes the @chatscope/chat-ui-kit-react and OpenAI's GPT-3.5-turbo model to process user's messages and generate responses. 
+// The `App()` function sets the initial state of the `messages` array, `isTyping`, `uploadedFiles`, and `pendingFiles` using the `useState` hook from React. 
+// It then defines the `handleSend`, `processMessageToChatGPT`, `handleAttachClick`, `handleRemoveFile`, 
+// and `handleAttachChange` functions which are used to handle user inputs such as sending a message, uploading a file, or removing a file.
+// The app renders a container that includes a `MainContainer` component from `@chatscope/chat-ui-kit-react` library, 
+// which contains a `ChatContainer`, `MessageList`, and `MessageInput` components. The `MessageList` component renders all the messages from the `messages` array. 
+// The `MessageInput` component allows the user to enter a new message and send it using the `handleSend` function. 
+// The `ChatContainer` component also renders a `TypingIndicator` component which is displayed when `isTyping` is set to true.
+// The app also includes the `handleAttachClick`, `handleRemoveFile`, and `handleAttachChange` functions to handle file uploads. 
+// When the user clicks the "Attach" button, the `handleAttachClick` function creates an `input` element of type "file" and opens the file picker. 
+// Once the user selects a file, the `handleAttachChange` function adds the file to the `pendingFiles` state. 
+// Finally, when the user sends the message, the `processMessageToChatGPT` function is called to process the message and generate a response from the veterinary bot.
+
 import { useState, useEffect } from "react";
 import "./App.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
@@ -13,9 +27,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import vet from "./VetBot_logo.png";
 
 const API_KEY = "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";
-// "Explain things like you would to a 10 year old learning how to code."
 const systemMessage = {
-  //  Explain things like you're talking to a software professional with 5 years of experience.
   role: "system",
   content:
     "Explain things like you're a veterinarian giving advice about pets, if you dont know what to do act like a scheduler for a vet",
@@ -101,6 +113,13 @@ function App() {
       });
   }
 
+  /**
+   * This function handles the attachment click event. 
+   * When the user clicks on the attachment icon, it creates a new input element
+   * of type file and accepts image and video files. 
+   * After the user selects a file, the function creates a new message object
+   * containing the file details, adds it to the messages state, and sends it to the server for processing.
+   */
   const handleAttachClick = () => {
     const fileInput = document.createElement("input");
     fileInput.type = "file";
@@ -139,6 +158,11 @@ function App() {
     setPendingFiles((prevFiles) => prevFiles.filter((file, i) => i !== index));
   }
 
+  /**
+   * Callback function that is triggered when the user selects a file to attach.
+   * Args: event: A browser event object that contains information about the user's action.
+   *  
+   */
   function handleAttachChange(event) {
     const files = Array.from(event.target.files);
     const newFiles = files.map((file) => ({
