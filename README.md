@@ -9,3 +9,5 @@ Instructions to run our code
 5.	Install required dependencies by entering: `npm i`
 6.	Run the app by entering: `npm run dev`
 7.  Open http://127.0.0.1:5173/ to view the app in your browser.
+
+Note: VetBot allows users to send an image. However, once the image is selected, the user must write a message to be able to send it to the chat. This encourages the user to add clarification to the picture sent. 
